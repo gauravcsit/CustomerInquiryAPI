@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Test_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Master_Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="30" />
+          <Property Name="ContactEmail" Type="nvarchar" MaxLength="25" />
+          <Property Name="MobileNo" Type="numeric" Precision="10" Scale="0" />
+        </EntityType>
+        <EntityType Name="Process_Transaction">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="TransactionDateTime" Type="datetime" />
+          <Property Name="Amount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="CurrencyCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerId" Type="numeric" Precision="10" Scale="0" />
+        </EntityType>
+        <Association Name="FK_Process_Transaction_Master_Customer">
+          <End Role="Master_Customer" Type="Self.Master_Customer" Multiplicity="0..1" />
+          <End Role="Process_Transaction" Type="Self.Process_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Master_Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Process_Transaction">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Test_DBModelStoreContainer">
+          <EntitySet Name="Master_Customer" EntityType="Self.Master_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Process_Transaction" EntityType="Self.Process_Transaction" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Process_Transaction_Master_Customer" Association="Self.FK_Process_Transaction_Master_Customer">
+            <End Role="Master_Customer" EntitySet="Master_Customer" />
+            <End Role="Process_Transaction" EntitySet="Process_Transaction" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Test_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Master_Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ContactEmail" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="Decimal" Precision="10" Scale="0" />
+          <NavigationProperty Name="Process_Transaction" Relationship="Self.FK_Process_Transaction_Master_Customer" FromRole="Master_Customer" ToRole="Process_Transaction" />
+        </EntityType>
+        <EntityType Name="Process_Transaction">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="TransactionDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CurrencyCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Decimal" Precision="10" Scale="0" />
+          <NavigationProperty Name="Master_Customer" Relationship="Self.FK_Process_Transaction_Master_Customer" FromRole="Process_Transaction" ToRole="Master_Customer" />
+        </EntityType>
+        <Association Name="FK_Process_Transaction_Master_Customer">
+          <End Role="Master_Customer" Type="Self.Master_Customer" Multiplicity="0..1" />
+          <End Role="Process_Transaction" Type="Self.Process_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Master_Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Process_Transaction">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Test_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Master_Customer" EntityType="Self.Master_Customer" />
+          <EntitySet Name="Process_Transaction" EntityType="Self.Process_Transaction" />
+          <AssociationSet Name="FK_Process_Transaction_Master_Customer" Association="Self.FK_Process_Transaction_Master_Customer">
+            <End Role="Master_Customer" EntitySet="Master_Customer" />
+            <End Role="Process_Transaction" EntitySet="Process_Transaction" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Test_DBModelStoreContainer" CdmEntityContainer="Test_DBEntities">
+          <EntitySetMapping Name="Master_Customer">
+            <EntityTypeMapping TypeName="Test_DBModel.Master_Customer">
+              <MappingFragment StoreEntitySet="Master_Customer">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Process_Transaction">
+            <EntityTypeMapping TypeName="Test_DBModel.Process_Transaction">
+              <MappingFragment StoreEntitySet="Process_Transaction">
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="TransactionDateTime" ColumnName="TransactionDateTime" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

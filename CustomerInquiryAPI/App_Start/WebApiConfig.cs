@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace CustomerInquiryAPI
@@ -14,10 +15,19 @@ namespace CustomerInquiryAPI
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            config.Formatters.JsonFormatter.SupportedMediaTypes
+    .Add(new MediaTypeHeaderValue("text/html"));
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{action}/{inquiry}",
+                defaults: new { inquiry = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApiNoParam",
+                routeTemplate: "api/{controller}/{action}",
+                defaults: null
             );
         }
     }

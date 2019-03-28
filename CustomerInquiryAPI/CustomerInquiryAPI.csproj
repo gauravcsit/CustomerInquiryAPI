@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{16B677E4-8E02-4A26-BD09-7D4AC2C1DC45}</ProjectGuid>
+    <ProjectGuid>{BA3D1312-27A1-4D81-8463-CDE6A174B484}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -38,8 +38,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -77,13 +84,56 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\InquiryController.cs" />
+    <Compile Include="DAL\InquiryDBManager.cs" />
+    <Compile Include="DAL\SharedObjectContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerInquiryEntity.cs" />
+    <Compile Include="Models\Inquiry.cs" />
+    <Compile Include="Models\Master_Customer.cs">
+      <DependentUpon>Test_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Process_Transaction.cs">
+      <DependentUpon>Test_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Test_DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Test_DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Test_DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Test_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Test_DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Test_DB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <EntityDeploy Include="Models\Test_DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Test_DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Test_DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Test_DB.edmx</DependentUpon>
+      <LastGenOutput>Test_DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Test_DB.edmx.diagram">
+      <DependentUpon>Test_DB.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Test_DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Test_DB.edmx</DependentUpon>
+      <LastGenOutput>Test_DB.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -93,8 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -109,9 +160,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>55569</DevelopmentServerPort>
+          <DevelopmentServerPort>52173</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55569/</IISUrl>
+          <IISUrl>http://localhost:52080/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
