@@ -6,8 +6,8 @@ using System.Web;
 namespace CustomerInquiryAPI.Models
 {
     public class Inquiry
-    {       
-        public decimal CustomerId { get; set; }
+    {
+        public string CustomerId { get; set; }
 
         public string Email { get; set; }
     }

@@ -7,13 +7,14 @@ namespace CustomerInquiryAPI.Models
 {
     public class CustomerInquiryEntity
     {
-        public decimal CustomerId { get; set; }
-        public string CustomerName { get; set; }
-        public string ContactEmail { get; set; }
-        public Nullable<decimal> MobileNo { get; set; }
+        public Int64 customerId { get; set; }
 
-        public List<Process_Transaction> RecentTransactions { get; set; }
+        public string name { get; set; }
 
+        public string email { get; set; }
 
+        public Int64? mobile { get; set; }                       
+
+        public List<RecentTransaction> transactions { get; set; }
     }
 }
